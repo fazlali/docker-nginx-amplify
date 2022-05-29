@@ -31,7 +31,7 @@ test -n "${API_KEY}" && \
     api_key=${API_KEY}
 
 test -n "${AMPLIFY_IMAGENAME}" && \
-    amplify_imagename=${AMPLIFY_IMAGENAME}
+    amplify_imagename=${AMPLIFY_IMAGENAME//\//\\\/}
 
 test -n "${HTTPS_PROXY}" && \
     https_proxy=${HTTPS_PROXY}
