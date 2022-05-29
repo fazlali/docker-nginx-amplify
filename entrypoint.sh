@@ -34,7 +34,7 @@ test -n "${AMPLIFY_IMAGENAME}" && \
     amplify_imagename=${AMPLIFY_IMAGENAME}
 
 test -n "${HTTPS_PROXY}" && \
-    https_proxy=${HTTPS_PROXY//\//\}
+    https_proxy=${HTTPS_PROXY//\//\\\/}
 
 if [ -n "${api_key}" -o -n "${amplify_imagename}" -o -n "${https_proxy}" ]; then
     echo "updating ${agent_conf_file} ..."
