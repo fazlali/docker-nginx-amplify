@@ -57,7 +57,7 @@ if [ -n "${api_key}" -o -n "${amplify_imagename}" -o -n "${https_proxy}" ]; then
 
     test -n "${https_proxy}" && \
     echo " ---> using https_proxy = ${https_proxy}" && \
-    sh -c "sed -i.old -e 's/https =.*$/https = $https_proxy/' \
+    sh -c "sed -i.old -e 's#https =.*$#https = $https_proxy#' \
     ${agent_conf_file}"
 
     test -f "${agent_conf_file}" && \
