@@ -34,7 +34,7 @@ test -n "${AMPLIFY_IMAGENAME}" && \
     amplify_imagename=${AMPLIFY_IMAGENAME}
 
 test -n "${HTTPS_PROXY}" && \
-    https_proxy=${HTTPS_PROXY}
+    https_proxy=${HTTPS_PROXY//\//\}
 
 if [ -n "${api_key}" -o -n "${amplify_imagename}" -o -n "${https_proxy}" ]; then
     echo "updating ${agent_conf_file} ..."
@@ -55,9 +55,9 @@ if [ -n "${api_key}" -o -n "${amplify_imagename}" -o -n "${https_proxy}" ]; then
     sh -c "sed -i.old -e 's/imagename.*$/imagename = $amplify_imagename/' \
     ${agent_conf_file}"
 
-    test -n "${amplify_imagename}" && \
-    echo " ---> using imagename = ${amplify_imagename}" && \
-    sh -c "sed -i.old -e 's/imagename.*$/imagename = $amplify_imagename/' \
+    test -n "${https_proxy}" && \
+    echo " ---> using https_proxy = ${https_proxy}" && \
+    sh -c "sed -i.old -e 's/https =.*$/https = $https_proxy/' \
     ${agent_conf_file}"
 
     test -f "${agent_conf_file}" && \
