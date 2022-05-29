@@ -31,7 +31,7 @@ test -n "${API_KEY}" && \
     api_key=${API_KEY}
 
 test -n "${AMPLIFY_IMAGENAME}" && \
-    amplify_imagename=${AMPLIFY_IMAGENAME//\//\\\/}
+    amplify_imagename=${AMPLIFY_IMAGENAME}
 
 test -n "${HTTPS_PROXY}" && \
     https_proxy=${HTTPS_PROXY}
@@ -40,24 +40,24 @@ if [ -n "${api_key}" -o -n "${amplify_imagename}" -o -n "${https_proxy}" ]; then
     echo "updating ${agent_conf_file} ..."
 
     if [ ! -f "${agent_conf_file}" ]; then
-	test -f "${agent_conf_file}.default" && \
-	cp -p "${agent_conf_file}.default" "${agent_conf_file}" || \
-	{ echo "no ${agent_conf_file}.default found! exiting."; exit 1; }
+    test -f "${agent_conf_file}.default" && \
+    cp -p "${agent_conf_file}.default" "${agent_conf_file}" || \
+    { echo "no ${agent_conf_file}.default found! exiting."; exit 1; }
     fi
 
     test -n "${api_key}" && \
     echo " ---> using api_key = ${api_key}" && \
     sh -c "sed -i.old -e 's/api_key.*$/api_key = $api_key/' \
-	${agent_conf_file}"
+    ${agent_conf_file}"
 
     test -n "${amplify_imagename}" && \
     echo " ---> using imagename = ${amplify_imagename}" && \
     sh -c "sed -i.old -e 's/imagename.*$/imagename = $amplify_imagename/' \
-	${agent_conf_file}"
+    ${agent_conf_file}"
 
-    test -n "${https_proxy}" && \
-    echo " ---> using https_proxy = ${https_proxy}" && \
-    sh -c "sed -i.old -e 's/https =.*$/https = $https_proxy/' \
+    test -n "${amplify_imagename}" && \
+    echo " ---> using imagename = ${amplify_imagename}" && \
+    sh -c "sed -i.old -e 's/imagename.*$/imagename = $amplify_imagename/' \
     ${agent_conf_file}"
 
     test -f "${agent_conf_file}" && \
@@ -74,7 +74,7 @@ if ! grep '^api_key.*=[ ]*[[:alnum:]].*' ${agent_conf_file} > /dev/null 2>&1; th
 fi
 
 echo "starting amplify-agent ..."
-service amplify-agent start > /dev/null 2>&1 < /dev/null
+nginx-amplify-agent.py start --config=/etc/amplify-agent/agent.conf > /dev/null 2>&1 < /dev/null
 
 if [ $? != 0 ]; then
     echo "couldn't start the agent, please check ${agent_log_file}"
