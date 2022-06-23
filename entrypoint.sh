@@ -36,7 +36,7 @@ test -n "${AMPLIFY_IMAGENAME}" && \
 test -n "${HTTPS_PROXY}" && \
     https_proxy=${HTTPS_PROXY//\//\\\/}
 
-if [ -n "${api_key}" -o -n "${amplify_imagename}" -o -n "${https_proxy}" ]; then
+if [ -n "${api_key}" -o -n "${amplify_imagename}" ]; then
     echo "updating ${agent_conf_file} ..."
 
     if [ ! -f "${agent_conf_file}" ]; then
@@ -74,7 +74,7 @@ if ! grep '^api_key.*=[ ]*[[:alnum:]].*' ${agent_conf_file} > /dev/null 2>&1; th
 fi
 
 echo "starting amplify-agent ..."
-nginx-amplify-agent.py start --config=/etc/amplify-agent/agent.conf > /dev/null 2>&1 < /dev/null
+service amplify-agent start > /dev/null 2>&1 < /dev/null
 
 if [ $? != 0 ]; then
     echo "couldn't start the agent, please check ${agent_log_file}"
