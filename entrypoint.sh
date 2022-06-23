@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This script launches nginx and the NGINX Amplify Agent.
 #
@@ -33,8 +33,7 @@ test -n "${API_KEY}" && \
 test -n "${AMPLIFY_IMAGENAME}" && \
     amplify_imagename=${AMPLIFY_IMAGENAME}
 
-test -n "${HTTPS_PROXY}" && \
-    https_proxy=${HTTPS_PROXY//\//\\\/}
+test -n "${HTTPS_PROXY}" && https_proxy=${HTTPS_PROXY//\//\\\/} && echo $https_proxy
 
 if [ -n "${api_key}" -o -n "${amplify_imagename}" ]; then
     echo "updating ${agent_conf_file} ..."
