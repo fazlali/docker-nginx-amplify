@@ -12,8 +12,12 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 	apt-get purge -qy curl apt-transport-https apt-utils gnupg2 && \
 	rm -rf /etc/apt/sources.list.d/nginx-amplify.list
 
-RUN chown nginx /var/log/nginx/*log && \
-    chmod 644 /var/log/nginx/*log
+RUN unlink /var/log/nginx/access.log \
+    && unlink /var/log/nginx/error.log \
+    && touch /var/log/nginx/access.log \
+    && touch /var/log/nginx/error.log \
+    && chown nginx /var/log/nginx/*log \
+    && chmod 644 /var/log/nginx/*log
 
 COPY ./stub_status.conf /etc/nginx/conf.d
 
